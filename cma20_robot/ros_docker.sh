@@ -3,10 +3,15 @@
 name=`basename $0 .sh`
 case $1 in
     build)
-        docker build -t ros:kinetic-desktop-full .
+        docker build -t ros:cma20-robot .
         ;;
     init)
-        docker run -dt --privileged --network host --name ros ros:kinetic-desktop-full
+        docker run -dt --privileged \
+            -v ~/Repository/cma20_robot:/catkin_ws/src/cma20_robot \
+            -v ~/Repository/sick_scan:/catkin_ws/src/sick_scan \
+            --network host \
+            --name ros \
+            ros:cma20-robot
         docker stop ros
         ;;
     start)
